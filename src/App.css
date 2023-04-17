@@ -1,0 +1,243 @@
+:root {
+  --small-font: 13px;
+  --focus-color: #efe6e6;
+}
+
+.wrapper {
+  --max-width: 1110px;
+  --padding: 1rem;
+
+  width: min(var(--max-width), 100% - (var(--padding) * 3));
+  margin-inline: auto;
+}
+.main-content {
+}
+
+h1 {
+  font-size: 26px;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  text-align: left;
+}
+
+.search-container {
+  display: flex;
+  max-width: 45rem;
+  gap: 10px;
+
+  flex-wrap: wrap;
+
+  margin: auto;
+}
+
+.search-bar {
+  flex-grow: 1;
+}
+
+.search-button {
+  align-self: flex-end;
+}
+.search-checkbox {
+  display: inline-block;
+  align-self: flex-end;
+
+  padding-left: 50px;
+  flex-basis: 100%;
+}
+
+.delegate-card {
+  display: flex;
+  padding-bottom: 20px;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+}
+
+.delegate-card-gtc::before {
+  content: "";
+  background-image: url("./gitcoin_logo.svg");
+  background-size: 200px;
+  background-position: right 30%;
+  background-repeat: no-repeat;
+
+  opacity: 0.45;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  border-radius: 16px;
+}
+
+.delegate-card-ens::before {
+  content: "";
+  background-image: url("./ens.png");
+  background-size: 200px;
+  background-position: right 30%;
+  background-repeat: no-repeat;
+
+  opacity: 0.45;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  border-radius: 16px;
+}
+
+.avatar {
+  width: 100px;
+  padding: 2px;
+}
+.delegate-details {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5px;
+  gap: 7px;
+}
+
+.delegate-name {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 23rem;
+  background-color: beige;
+  color: currentcolor;
+  text-align: left;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -25px; /* Position the tooltip 30px above the parent div */
+  left: 0px;
+  font-size: var(--small-font);
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.copy-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.copy-button:hover {
+  color: #007bff; /* Change the button color to blue when hovered over */
+}
+
+.table-results table {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.table-results {
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  padding: 20px 24px 20px;
+  position: relative;
+}
+
+/* .table-results-ens::before {
+  content: "";
+  background-image: url("./ens.png");
+  background-size: 150px;
+  background-position: 3% 97%;
+  background-repeat: no-repeat;
+
+  opacity: 0.25;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  border-radius: 16px;
+} */
+
+.table-results td {
+  padding: 12px 0px;
+  border-bottom: 1px solid #e8e8e8;
+  padding-left: 12px;
+  width: 200px;
+}
+
+.table-results td:first-child {
+  padding: 0px;
+  flex-grow: 1;
+  max-width: 200px;
+}
+
+.table-results th {
+  text-align: left;
+  color: #9b9ba5;
+  padding: 0px 0px 10px;
+}
+
+.table-results th:not(:first-child) {
+  text-align-last: right;
+  text-align: right;
+  padding-left: 5px;
+}
+.delegate-results-container {
+  max-width: 45rem;
+  flex-grow: 1;
+  margin: 50px auto;
+}
+
+table caption::first-letter {
+  font-family: cursive;
+  font-size: 1.5rem;
+}
+
+.table-pagination {
+  padding: 16px;
+  position: relative;
+  left: 0px;
+  align-items: flex-end;
+}
+
+.nav-logo {
+  height: 50px;
+}
+
+.tab-container {
+  display: flex;
+  margin: 0px auto 25px;
+  gap: 5px;
+  max-width: 45rem;
+}
+
+.tab {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #f1f1f1;
+  border: none;
+  border-bottom: 2px solid transparent;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+  border-radius: 5px;
+}
+
+.tab:hover {
+  background-color: #ddd;
+}
+
+.tab.active {
+  border-bottom-color: #4caf50;
+  background-color: #acd2ae;
+}
