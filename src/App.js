@@ -78,7 +78,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch("/delegate", {
+    fetch("https://votingpower.xyz/delegate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +95,7 @@ function App() {
         setWalletData(data);
       });
 
-    fetch("http://votingpower.xyz/voting-power", {
+    fetch("https://votingpower.xyz/voting-power", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,7 +110,7 @@ function App() {
         setVotingPower(data);
       });
 
-    fetch("http://votingpower.xyz/delegations", {
+    fetch("https://votingpower.xyz/delegations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +138,7 @@ function App() {
     //     setVotingPower(data);
     //   });
 
-    fetch("http://votingpower.xyz/latest_block/ens")
+    fetch("https://votingpower.xyz/latest_block/ens")
       .then((res) => res.json())
       .then((data) => {
         setDataBlock(data);
