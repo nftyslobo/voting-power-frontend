@@ -95,7 +95,7 @@ function App() {
         setWalletData(data);
       });
 
-    fetch("/voting-power", {
+    fetch("http://votingpower.xyz/voting-power", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,7 +110,7 @@ function App() {
         setVotingPower(data);
       });
 
-    fetch("/delegations", {
+    fetch("http://votingpower.xyz/delegations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +138,7 @@ function App() {
     //     setVotingPower(data);
     //   });
 
-    fetch("/latest_block/ens")
+    fetch("http://votingpower.xyz/latest_block/ens")
       .then((res) => res.json())
       .then((data) => {
         setDataBlock(data);
