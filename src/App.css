@@ -3,6 +3,10 @@
   --focus-color: #efe6e6;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
 .wrapper {
   --max-width: 1110px;
   --padding: 1rem;
@@ -16,9 +20,39 @@
 h1 {
   font-size: 26px;
   padding-top: 1rem;
-  padding-bottom: 2rem;
-  text-align: left;
+  padding-bottom: 1rem;
+  text-align: center;
 }
+h2 {
+  text-align: center;
+  font-weight: 500;
+}
+/* .back-splash-color {
+  position: absolute;
+  height: 15rem;
+  width: 100%;
+  margin-right: 0 -1000rem;
+  left: 0;
+  z-index: -10;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    linear-gradient(92.31deg, #6f7cf4 0%, #373f87 100%);
+}
+
+.back-splash-grid {
+  position: absolute;
+  height: 15rem;
+  width: 100%;
+  margin-right: 0 -1000rem;
+  left: 0;
+  z-index: -1;
+  opacity: 20%;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(217, 217, 217, 0.161) 0%,
+    rgba(217, 217, 217, 0) 100%
+  );
+  background-size: 30px 30px;
+} */
 
 .search-container {
   display: flex;
@@ -56,7 +90,7 @@ h1 {
 .delegate-card-gtc::before {
   content: "";
   background-image: url("./gitcoin_logo.svg");
-  background-size: 200px;
+  background-size: 30%;
   background-position: right 30%;
   background-repeat: no-repeat;
 
@@ -73,8 +107,8 @@ h1 {
 .delegate-card-ens::before {
   content: "";
   background-image: url("./ens.png");
-  background-size: 200px;
-  background-position: right 30%;
+  background-size: 30%;
+  background-position: right 20%;
   background-repeat: no-repeat;
 
   opacity: 0.45;
@@ -111,17 +145,19 @@ h1 {
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 23rem;
-  background-color: beige;
-  color: currentcolor;
+  width: 24rem;
+  background: #262626;
+  color: #f0eaea;
   text-align: left;
-  border-radius: 6px;
-  padding: 5px 0;
+  border-radius: 5px;
+  padding: 5px 10px 5px 5px;
   position: absolute;
   z-index: 1;
   top: -25px; /* Position the tooltip 30px above the parent div */
   left: 0px;
-  font-size: var(--small-font);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
 }
 
 .tooltip:hover .tooltiptext {
@@ -132,7 +168,7 @@ h1 {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 .copy-button:hover {
@@ -147,7 +183,7 @@ h1 {
 .table-results {
   width: 100%;
   background: white;
-  border-radius: 16px;
+  border-radius: 0px 16px 16px 16px;
   padding: 20px 24px 20px;
   position: relative;
 }
@@ -188,6 +224,15 @@ h1 {
   padding: 0px 0px 10px;
 }
 
+@media only screen and (max-width: 600px) {
+  .table-results th:nth-child(3) {
+    display: none;
+  }
+  .table-results td:nth-child(3) {
+    display: none;
+  }
+}
+
 .table-results th:not(:first-child) {
   text-align-last: right;
   text-align: right;
@@ -217,7 +262,7 @@ table caption::first-letter {
 
 .tab-container {
   display: flex;
-  margin: 0px auto 25px;
+  margin: 0px auto 0px;
   gap: 5px;
   max-width: 45rem;
 }
@@ -227,10 +272,14 @@ table caption::first-letter {
   padding: 10px 20px;
   background-color: #f1f1f1;
   border: none;
-  border-bottom: 2px solid transparent;
   outline: none;
   transition: background-color 0.3s, border-color 0.3s;
-  border-radius: 5px;
+  border-radius: 5px 5px 0px 0px;
+  color: #262626;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #9b9ba5;
 }
 
 .tab:hover {
@@ -239,5 +288,6 @@ table caption::first-letter {
 
 .tab.active {
   border-bottom-color: #4caf50;
-  background-color: #acd2ae;
+  background-color: #ffffff;
+  color: #262626;
 }

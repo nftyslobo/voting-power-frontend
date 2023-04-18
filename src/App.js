@@ -158,12 +158,13 @@ function App() {
 
   return (
     <div className="wrapper">
-      <header className="header">
-        <Heading align="center">Voting Power</Heading>
-
-        <TabContainer activeTab={dao} setActiveTab={setDao} />
-      </header>
+      <div className="back-splash-color"></div>
+      <div className="back-splash-grid"></div>
       <div className="main-content">
+        <header className="header">
+          <h1 align="center">Voting Power</h1>
+          <h2 align="center">Explore delegate's delegators</h2>
+        </header>
         <div className="search-container">
           <div className="search-bar">
             <Input
@@ -189,6 +190,7 @@ function App() {
               id="zero-balance"
               name="zero-balance"
               label="Show Zero Balance"
+              color="white"
             />
           </div>
           <div className="search-checkbox">
@@ -205,6 +207,7 @@ function App() {
           </div>
         </div>
         {/* Delegate Results */}
+
         <div className="delegate-results-container">
           <div className={`delegate-card ${daoSelectionClass}`}>
             <div className="avatar">
@@ -218,6 +221,7 @@ function App() {
               <div>Delegations: {delegations}</div>
             </div>
           </div>
+          <TabContainer activeTab={dao} setActiveTab={setDao} />
           <Table walletData={walletData} updatedAs={dataBlock} dao={dao} />
         </div>
       </div>
@@ -322,6 +326,7 @@ export function Table(props) {
         {props.dao.toUpperCase()} As Of: {formatNumber(props.updatedAs)}{" "}
         current: {currentBlock ? formatNumber(currentBlock) : "Loading..."}
       </div> */}
+
       <div className="table-results">
         <table>
           <thead>
