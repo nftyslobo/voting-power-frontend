@@ -43,6 +43,39 @@ function App() {
     "0x2B888954421b424C5D3D9Ce9bB67c9bD47537d12"
   );
 
+  const [topDelegates, setTopDelegates] = useState([
+    {
+      delegate: "0x81b287c0992b110adeb5903bf7e2d9350c80581a",
+      votingPower: 218140.4770269189,
+      delegations: 1130,
+      rank: 1.0,
+    },
+    {
+      delegate: "0x63c97cccae1f000af9f6a4f4641e282c4e8c63fb",
+      votingPower: 207400.06647476,
+      delegations: 1,
+      rank: 2.0,
+    },
+    {
+      delegate: "0x983110309620d911731ac0932219af06091b6744",
+      votingPower: 192950.3477773078,
+      delegations: 1126,
+      rank: 3.0,
+    },
+    {
+      delegate: "0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5",
+      votingPower: 169576.3944310115,
+      delegations: 721,
+      rank: 4.0,
+    },
+    {
+      delegate: "0x809fa673fe2ab515faa168259cb14e2bedebf68e",
+      votingPower: 155783.377519752,
+      delegations: 746,
+      rank: 5.0,
+    },
+  ]);
+
   const [delegations, setDelegations] = useState("0");
   const [votingPower, setVotingPower] = useState("0");
   const userSearchInputRef = useRef(null);
@@ -76,6 +109,22 @@ function App() {
       handleClick();
     }
   };
+
+  useEffect(() => {
+    fetch("https://api.votingpower.xyz/delegates", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        dao: dao,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTopDelegates(data);
+      });
+  }, [dao]);
 
   useEffect(() => {
     fetch("https://api.votingpower.xyz/delegate", {
@@ -165,6 +214,14 @@ function App() {
           <h1 align="center">Voting Power</h1>
           <h2 align="center">Explore delegate's delegators</h2>
         </header>
+        <div className="top-delegators-container">
+          <TabContainer activeTab={dao} setActiveTab={setDao} />
+          <TableDelegators
+            dao={dao}
+            topDelegates={topDelegates}
+            setAddress={setWallet}
+          />
+        </div>
         <div className="search-container">
           <div className="search-bar">
             <Input
@@ -225,6 +282,7 @@ function App() {
           <Table walletData={walletData} updatedAs={dataBlock} dao={dao} />
         </div>
       </div>
+      <div className="footer">As of: {formatNumber(dataBlock)}</div>
     </div>
   );
 }
@@ -404,5 +462,70 @@ export function TabContainer({ activeTab, setActiveTab }) {
         GTC
       </button>
     </div>
+  );
+}
+
+export function TableDelegators(props) {
+  const [currentPage, setPage] = useState(1);
+  const itemsPerPage = 5;
+  const totalItems = props.topDelegates.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const visibleData = props.topDelegates.slice(startIndex, endIndex);
+
+  const emptyRows = Array(itemsPerPage - visibleData.length).fill(null);
+
+  return (
+    <>
+      <div className="top-delegators-table">
+        <table>
+          <caption>Top 50</caption>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Delegate</th>
+              <th>Voting Power</th>
+              <th>Delegations</th>
+            </tr>
+          </thead>
+          <tbody>
+            {visibleData.map((data, key) => {
+              return (
+                <tr key={key}>
+                  <td>{data.rank}</td>
+                  <td align="left">
+                    <button onClick={() => props.setAddress(data.delegate)}>
+                      <GetEns address={data.delegate} />
+                    </button>
+                  </td>
+                  <td align="right">{formatNumber(data.votingPower)}</td>
+                  <td align="right"> {formatNumber(data.delegations)}</td>
+                </tr>
+              );
+            })}
+            {emptyRows.map((_, index) => (
+              <tr key={`empty-${index}`}>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="table-pagination pagination-delegators">
+          <PageButtons
+            alwaysShowFirst
+            alwaysShowLast
+            current={currentPage}
+            total={totalPages}
+            onChange={(value) => setPage(value)}
+            max="5"
+          />
+        </div>
+      </div>
+    </>
   );
 }
