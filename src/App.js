@@ -9,7 +9,6 @@ import {
   CopySVG,
   CheckSVG,
   MagnifyingGlassSimpleSVG,
-  Heading,
   PageButtons,
 } from "@ensdomains/thorin";
 import { useEnsName, useBlockNumber, useEnsAddress } from "wagmi";
@@ -266,7 +265,7 @@ function App() {
         {/* Delegate Results */}
 
         <div className="delegate-results-container">
-          <div className={`delegate-card ${daoSelectionClass}`}>
+          <div className="delegate-card">
             <div className="avatar">
               <GetAvatar address={wallet} />
             </div>
@@ -277,11 +276,19 @@ function App() {
               </div>
               <div>Delegations: {delegations}</div>
             </div>
+            <div className="vote-distribution-container">
+              <VoteDistribution walletData={walletData} />
+            </div>
           </div>
           <TabContainer activeTab={dao} setActiveTab={setDao} />
-          <Table walletData={walletData} updatedAs={dataBlock} dao={dao} />
+          <DelegateTable
+            walletData={walletData}
+            updatedAs={dataBlock}
+            dao={dao}
+          />
         </div>
       </div>
+      <div></div>
       <div className="footer">As of: {formatNumber(dataBlock)}</div>
     </div>
   );
@@ -296,7 +303,7 @@ export function formatNumber(number) {
   });
 }
 
-export function Tooltip(props) {
+export function AddressTooltip(props) {
   const [isCopySuccess, setIsCopySuccess] = useState(false);
 
   function copyToClipboard() {
@@ -336,13 +343,13 @@ export const GetEns = ({ address, cn }) => {
   return (
     <div>
       {data ? (
-        <Tooltip tooltipText={address}>
+        <AddressTooltip tooltipText={address}>
           <div className={cn}>{data}</div>
-        </Tooltip>
+        </AddressTooltip>
       ) : (
-        <Tooltip tooltipText={address}>
+        <AddressTooltip tooltipText={address}>
           <span>{truncatedAddress}</span>
-        </Tooltip>
+        </AddressTooltip>
       )}
     </div>
   );
@@ -364,7 +371,7 @@ export const GetAvatar = ({ address }) => {
   );
 };
 
-export function Table(props) {
+export function DelegateTable(props) {
   const { data: currentBlock, isError, isLoading } = useBlockNumber();
 
   const [currentPage, setPage] = useState(1);
@@ -527,5 +534,95 @@ export function TableDelegators(props) {
         </div>
       </div>
     </>
+  );
+}
+
+export function VoteDistribution(props) {
+  const { walletData: data } = props;
+
+  if (!data || data.length === 0) {
+    // Return an empty div if there is no data
+    return <div></div>;
+  }
+
+  const formatDelegatorBalance = (balance) => {
+    if (balance > 500) {
+      return `${(balance / 1000).toFixed(1)}k`;
+    } else {
+      return balance;
+    }
+  };
+
+  const totalDelegatorBalance = data.reduce(
+    (total, item) => total + (item?.delegator_balance || 0),
+    0
+  );
+
+  const firstThreeEntries = data.slice(0, 3);
+  const otherEntries = data.slice(3);
+
+  const dividedBalances = firstThreeEntries.map(
+    (item) => (item?.delegator_balance || 0) / totalDelegatorBalance
+  );
+
+  const remainingVoteShare =
+    1 - dividedBalances.reduce((total, balance) => total + balance, 0);
+  const otherTotalBalance = otherEntries.reduce(
+    (total, item) => total + (item?.delegator_balance || 0),
+    0
+  );
+
+  const result = [...dividedBalances, remainingVoteShare];
+
+  const barGraphWidth = 250;
+
+  const legendLabels = ["1st", "2nd", "3rd", "Other"];
+
+  const largestSectionIndex = result.indexOf(Math.max(...result));
+
+  const colors = ["#3888ff", "#ffaf38", "#9cc4ff", "#fbd975"];
+
+  return (
+    <div>
+      <p align="center">Voting Power Distribution</p>
+      <div className="bar-graph-container">
+        {result.map((value, index) => (
+          <div
+            className="bar-graph-item"
+            key={index}
+            style={{
+              backgroundColor: colors[index],
+              width: `${value * barGraphWidth}px`,
+              color: index === largestSectionIndex ? "white" : "transparent",
+            }}
+          >
+            {index === largestSectionIndex &&
+              (index < 3
+                ? formatDelegatorBalance(
+                    firstThreeEntries[index]?.delegator_balance || 0
+                  )
+                : formatDelegatorBalance(otherTotalBalance))}
+          </div>
+        ))}
+      </div>
+      <div className="bar-graph-legend-container">
+        {legendLabels.map((label, index) => (
+          <div className="bar-graph-legend-text" key={index}>
+            <div
+              className="bar-graph-legend-color-block"
+              style={{
+                backgroundColor: colors[index],
+              }}
+            >
+              {result[index] >= 0.01 &&
+                !isNaN(result[index]) &&
+                result[index] <= 0.99 &&
+                `${Math.round(result[index] * 100)}%`}
+            </div>
+            <span>{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

@@ -88,7 +88,7 @@ h2 {
   position: relative;
 }
 
-.delegate-card-gtc::before {
+/* .delegate-card-gtc::before {
   content: "";
   background-image: url("./gitcoin_logo.svg");
   background-size: 30%;
@@ -120,7 +120,7 @@ h2 {
   bottom: 0;
   z-index: 0;
   border-radius: 16px;
-}
+} */
 
 .avatar {
   width: 100px;
@@ -344,4 +344,53 @@ table caption {
   color: goldenrod;
   text-align: center;
   margin-bottom: 10px;
+}
+
+.bar-graph-container {
+  display: flex;
+  width: 250px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar-graph-item {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.bar-graph-legend-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.bar-graph-legend-color-block {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 9px;
+  font-weight: bold;
+  margin-right: 5px;
+  border-radius: 4px;
+  padding-left: 2px;
+}
+
+.bar-graph-legend-text {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.vote-distribution-container {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
