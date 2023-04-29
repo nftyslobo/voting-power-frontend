@@ -6,11 +6,11 @@ import App from "./App";
 import { ThemeProvider } from "styled-components";
 import { ThorinGlobalStyles, lightTheme } from "@ensdomains/thorin";
 import { WagmiConfig, createClient, configureChains, mainnet } from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
+import { infuraProvider } from "wagmi/providers/infura";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet],
-  [publicProvider()]
+  [infuraProvider({ apiKey: process.env.REACT_APP_INFURA_API_KEY })]
 );
 
 const client = createClient({
