@@ -215,7 +215,7 @@ function App() {
         </header>
         <div className="top-delegators-container">
           <TabContainer activeTab={dao} setActiveTab={setDao} />
-          <TableDelegators
+          <TableTopDelegates
             dao={dao}
             topDelegates={topDelegates}
             setAddress={setWallet}
@@ -361,7 +361,6 @@ export const GetAvatar = ({ address }) => {
   const { data, isError, isLoading } = useEnsName({
     address: address,
   });
-  console.log("get avatar: " + data);
 
   return (
     <div>
@@ -474,7 +473,7 @@ export function TabContainer({ activeTab, setActiveTab }) {
   );
 }
 
-export function TableDelegators(props) {
+export function TableTopDelegates(props) {
   const [currentPage, setPage] = useState(1);
   const itemsPerPage = 5;
   const totalItems = props.topDelegates.length;
@@ -504,10 +503,11 @@ export function TableDelegators(props) {
               return (
                 <tr key={key}>
                   <td>{data.rank}</td>
-                  <td align="left">
-                    <button onClick={() => props.setAddress(data.delegate)}>
-                      <GetEns address={data.delegate} />
-                    </button>
+                  <td
+                    align="left"
+                    onClick={() => props.setAddress(data.delegate)}
+                  >
+                    <GetEns address={data.delegate} />
                   </td>
                   <td align="right">{formatNumber(data.votingPower)}</td>
                   <td align="right"> {formatNumber(data.delegations)}</td>
