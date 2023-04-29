@@ -576,7 +576,7 @@ export function VoteDistribution(props) {
 
   const result = [...dividedBalances, remainingVoteShare];
 
-  const barGraphWidth = 250;
+  const barGraphWidth = 275;
 
   const legendLabels = ["1st", "2nd", "3rd", "Other"];
 

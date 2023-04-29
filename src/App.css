@@ -339,7 +339,7 @@ table caption {
 
 .bar-graph-container {
   display: flex;
-  width: 250px;
+  width: 275px;
   height: 40px;
   border-radius: 6px;
   overflow: hidden;
@@ -357,6 +357,7 @@ table caption {
 .bar-graph-legend-container {
   display: flex;
   margin-top: 10px;
+  gap: 12px;
 }
 
 .bar-graph-legend-color-block {
@@ -376,7 +377,6 @@ table caption {
 .bar-graph-legend-text {
   display: flex;
   align-items: center;
-  margin-right: 10px;
 }
 
 .vote-distribution-container-desktop {
