@@ -263,7 +263,6 @@ function App() {
           </div>
         </div>
         {/* Delegate Results */}
-
         <div className="delegate-results-container">
           <div className="delegate-card">
             <div className="avatar">
@@ -276,9 +275,12 @@ function App() {
               </div>
               <div>Delegations: {delegations}</div>
             </div>
-            <div className="vote-distribution-container">
+            <div className="vote-distribution-container-desktop">
               <VoteDistribution walletData={walletData} />
             </div>
+          </div>
+          <div className="vote-distribution-container-mobile">
+            <VoteDistribution walletData={walletData} />
           </div>
           <TabContainer activeTab={dao} setActiveTab={setDao} />
           <DelegateTable

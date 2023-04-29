@@ -225,15 +225,6 @@ h2 {
   padding: 0px 0px 10px;
 }
 
-@media only screen and (max-width: 600px) {
-  .table-results th:nth-child(3) {
-    display: none;
-  }
-  .table-results td:nth-child(3) {
-    display: none;
-  }
-}
-
 .table-results th:not(:first-child) {
   text-align-last: right;
   text-align: right;
@@ -388,9 +379,30 @@ table caption {
   margin-right: 10px;
 }
 
-.vote-distribution-container {
+.vote-distribution-container-desktop {
   margin-left: auto;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.vote-distribution-container-mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .table-results th:nth-child(3) {
+    display: none;
+  }
+  .table-results td:nth-child(3) {
+    display: none;
+  }
+  .vote-distribution-container-desktop {
+    display: none;
+  }
+  .vote-distribution-container-mobile {
+    display: flex;
+    margin-bottom: 12px;
+    justify-content: center;
+  }
 }
