@@ -233,7 +233,13 @@ h2 {
 .delegate-results-container {
   max-width: 45rem;
   flex-grow: 1;
-  margin: 50px auto;
+  margin: 24px auto;
+}
+
+.delegate-results-card-container {
+  max-width: 45rem;
+  flex-grow: 1;
+  margin: 24px auto 12px;
 }
 
 table caption {
@@ -397,12 +403,19 @@ table caption {
   .table-results td:nth-child(3) {
     display: none;
   }
+  .top-delegators-table td:last-child {
+    display: none;
+  }
+  .top-delegators-table th:last-child {
+    display: none;
+  }
+
   .vote-distribution-container-desktop {
     display: none;
   }
   .vote-distribution-container-mobile {
     display: flex;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
     justify-content: center;
   }
   .tooltip:hover .tooltiptext {

@@ -220,6 +220,26 @@ function App() {
             topDelegates={topDelegates}
             setAddress={setWallet}
           />
+        </div>{" "}
+        <div className="delegate-results-card-container">
+          <div className="delegate-card">
+            <div className="avatar">
+              <GetAvatar address={wallet} />
+            </div>
+            <div className="delegate-details">
+              <GetEns address={wallet} cn="delegate-name" />
+              <div>
+                {<FlameSVG />} {formatNumber(votingPower)}
+              </div>
+              <div>Delegations: {delegations}</div>
+            </div>
+            <div className="vote-distribution-container-desktop">
+              <VoteDistribution walletData={walletData} />
+            </div>
+          </div>
+          <div className="vote-distribution-container-mobile">
+            <VoteDistribution walletData={walletData} />
+          </div>
         </div>
         <div className="search-container">
           <div className="search-bar">
@@ -264,24 +284,6 @@ function App() {
         </div>
         {/* Delegate Results */}
         <div className="delegate-results-container">
-          <div className="delegate-card">
-            <div className="avatar">
-              <GetAvatar address={wallet} />
-            </div>
-            <div className="delegate-details">
-              <GetEns address={wallet} cn="delegate-name" />
-              <div>
-                {<FlameSVG />} {formatNumber(votingPower)}
-              </div>
-              <div>Delegations: {delegations}</div>
-            </div>
-            <div className="vote-distribution-container-desktop">
-              <VoteDistribution walletData={walletData} />
-            </div>
-          </div>
-          <div className="vote-distribution-container-mobile">
-            <VoteDistribution walletData={walletData} />
-          </div>
           <TabContainer activeTab={dao} setActiveTab={setDao} />
           <DelegateTable
             walletData={walletData}
