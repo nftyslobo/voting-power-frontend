@@ -81,13 +81,15 @@ function App() {
   const [dao, setDao] = useState("ens");
   const [showZeroBalance, setShowZeroBalance] = useState(false);
   const [dataBlock, setDataBlock] = useState("");
-  const daoSelectionClass =
-    dao === "ens" ? "delegate-card-ens" : "delegate-card-gtc";
+  // const daoSelectionClass =
+  //   dao === "ens" ? "delegate-card-ens" : "delegate-card-gtc";
+  const [delegatePage, setDelegatePage] = useState(1);
 
   const [showHistoricDelegators, setShowHistoricDelegators] = useState(false);
 
   async function handleClick() {
     const { value } = userSearchInputRef.current;
+    setDelegatePage(1);
 
     if (value.length == 42) {
       setWallet(value);
@@ -219,6 +221,7 @@ function App() {
             dao={dao}
             topDelegates={topDelegates}
             setAddress={setWallet}
+            setDelegatePage={setDelegatePage}
           />
         </div>{" "}
         <div className="delegate-results-card-container">
@@ -290,6 +293,8 @@ function App() {
             updatedAs={dataBlock}
             dao={dao}
             showHistoricDelegators={showHistoricDelegators}
+            setDelegatePage={setDelegatePage}
+            delegatePage={delegatePage}
           />
         </div>
       </div>
@@ -378,11 +383,10 @@ export const GetAvatar = ({ address }) => {
 export function DelegateTable(props) {
   const { data: currentBlock, isError, isLoading } = useBlockNumber();
 
-  const [currentPage, setPage] = useState(1);
   const itemsPerPage = 10;
   const totalItems = props.walletData.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
+  const startIndex = (props.delegatePage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
   const visibleData = props.walletData.slice(startIndex, endIndex);
@@ -446,9 +450,9 @@ export function DelegateTable(props) {
           <PageButtons
             alwaysShowFirst
             alwaysShowLast
-            current={currentPage}
+            current={props.delegatePage}
             total={totalPages}
-            onChange={(value) => setPage(value)}
+            onChange={(value) => props.setDelegatePage(value)}
             max="5"
           />
         </div>
@@ -514,7 +518,10 @@ export function TableTopDelegates(props) {
                   <td>{data.rank}</td>
                   <td
                     align="left"
-                    onClick={() => props.setAddress(data.delegate)}
+                    onClick={() => {
+                      props.setAddress(data.delegate);
+                      props.setDelegatePage(1);
+                    }}
                   >
                     <GetEns address={data.delegate} />
                   </td>
