@@ -289,6 +289,7 @@ function App() {
             walletData={walletData}
             updatedAs={dataBlock}
             dao={dao}
+            showHistoricDelegators={showHistoricDelegators}
           />
         </div>
       </div>
@@ -402,7 +403,11 @@ export function DelegateTable(props) {
               <th>Delegator</th>
               <th>Token Balance</th>
               <th>Block Delegated</th>
-              <th>Prior Delegate</th>
+              <th>
+                {props.showHistoricDelegators
+                  ? "Current Delegate"
+                  : "Prior Delegate"}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -415,8 +420,10 @@ export function DelegateTable(props) {
                   <td align="right">{formatNumber(data.delegator_balance)}</td>
                   <td align="right">{formatNumber(data.blockNumber)}</td>
                   <td align="right">
-                    {data.fromDelegate ===
-                    "0x0000000000000000000000000000000000000000" ? (
+                    {props.showHistoricDelegators ? (
+                      <GetEns address={data.delegate} />
+                    ) : data.fromDelegate ===
+                      "0x0000000000000000000000000000000000000000" ? (
                       "None"
                     ) : (
                       <GetEns address={data.fromDelegate} />

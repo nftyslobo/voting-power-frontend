@@ -1,6 +1,6 @@
 # Voting Power
 
-Site is live on [votingpower.xyz](https://votingpower.com)
+Site is live on [votingpower.xyz](https://votingpower.xyz)
 
 ### Todos
 
