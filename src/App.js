@@ -112,7 +112,8 @@ function App() {
   };
 
   useEffect(() => {
-    fetch("https://api.votingpower.xyz/delegates", {
+    console.log("go");
+    fetch("https://api.votingpower.xyz/top-delegates", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -128,7 +129,7 @@ function App() {
   }, [dao]);
 
   useEffect(() => {
-    fetch("https://api.votingpower.xyz/delegate", {
+    fetch("https://api.votingpower.xyz/delegation-details", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -145,7 +146,7 @@ function App() {
         setWalletData(data);
       });
 
-    fetch("https://api.votingpower.xyz/voting-power", {
+    fetch("https://api.votingpower.xyz/get-vp", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -160,7 +161,7 @@ function App() {
         setVotingPower(data);
       });
 
-    fetch("https://api.votingpower.xyz/delegations", {
+    fetch("https://api.votingpower.xyz/get-delegations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -175,18 +176,6 @@ function App() {
       .then((data) => {
         setDelegations(data);
       });
-
-    // fetch("/delegations/" + wallet + "?showzerobalance=" + showZeroBalance)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setDelegations(data);
-    //   });
-
-    // fetch("/voting-power/" + wallet)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setVotingPower(data);
-    //   });
 
     fetch("https://api.votingpower.xyz/latest_block/ens")
       .then((res) => res.json())
@@ -234,7 +223,7 @@ function App() {
               <div>
                 {<FlameSVG />} {formatNumber(votingPower)}
               </div>
-              <div>Delegations: {delegations}</div>
+              <div>Delegations: {formatNumber(delegations)}</div>
             </div>
             <div className="vote-distribution-container-desktop">
               <VoteDistribution walletData={walletData} />
@@ -298,8 +287,7 @@ function App() {
           />
         </div>
       </div>
-      <div></div>
-      <div className="footer">As of: {formatNumber(dataBlock)}</div>
+      <div> {/* <LatestBlockInfo /> */}</div>
     </div>
   );
 }
@@ -409,7 +397,7 @@ export function DelegateTable(props) {
               <th>Block Delegated</th>
               <th>
                 {props.showHistoricDelegators
-                  ? "Current Delegate"
+                  ? "Switched To"
                   : "Prior Delegate"}
               </th>
             </tr>
@@ -481,6 +469,27 @@ export function TabContainer({ activeTab, setActiveTab }) {
         onClick={() => handleTabClick("gtc")}
       >
         GTC
+      </button>
+      <button
+        className={`tab ${activeTab === "arb" ? "active" : ""}`}
+        id="arb"
+        onClick={() => handleTabClick("arb")}
+      >
+        ARB
+      </button>
+      <button
+        className={`tab ${activeTab === "uni" ? "active" : ""}`}
+        id="uni"
+        onClick={() => handleTabClick("uni")}
+      >
+        UNI
+      </button>
+      <button
+        className={`tab ${activeTab === "op" ? "active" : ""}`}
+        id="op"
+        onClick={() => handleTabClick("op")}
+      >
+        OP
       </button>
     </div>
   );
@@ -644,3 +653,49 @@ export function VoteDistribution(props) {
     </div>
   );
 }
+
+// const LatestBlockInfo = () => {
+//   const [latestBlocks, setLatestBlocks] = useState([]);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     // Replace 'http://localhost:5000' with the base URL of your Flask API if it's different
+//     fetch("/latest-block")
+//       .then((response) => {
+//         if (!response.ok) {
+//           // If the response is not 2xx, throw an error
+//           throw new Error(`HTTP error status: ${response.status}`);
+//         }
+//         return response.json();
+//       })
+//       .then((data) => {
+//         setLatestBlocks(data);
+//         setIsLoading(false);
+//       })
+//       .catch((error) => {
+//         setError(error);
+//         setIsLoading(false);
+//       });
+//   }, []);
+
+//   if (isLoading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (error) {
+//     return <div>Error: {error.message}</div>;
+//   }
+
+//   return (
+//     <div className="footer">
+//       <ul>
+//         {latestBlocks.map((block, index) => (
+//           <li key={index}>
+//             {block[0]}:{formatNumber(block[1])}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };

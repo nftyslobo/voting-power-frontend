@@ -343,6 +343,11 @@ table caption {
   margin-bottom: 10px;
 }
 
+.footer ul {
+  text-align: left;
+  padding: 0;
+}
+
 .bar-graph-container {
   display: flex;
   width: 275px;
