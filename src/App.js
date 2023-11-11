@@ -17,8 +17,33 @@ import { useSearchParams } from "react-router-dom";
 
 function App() {
   const defaultAddress = "0x2B888954421b424C5D3D9Ce9bB67c9bD47537d12";
-  const [wallet, setWallet] = useState(defaultAddress);
   const [searchParams] = useSearchParams();
+  const validTokens = ["ens", "gtc", "arb", "op", "uni"];
+  const defaultDao = "ens";
+
+  // Function to parse URL parameters
+  function parseURLParams(searchParams) {
+    const addressFromURL = searchParams.get("address");
+    const tokenFromURL = searchParams.get("token");
+
+    const address =
+      addressFromURL &&
+      addressFromURL.length === 42 &&
+      addressFromURL.startsWith("0x")
+        ? addressFromURL
+        : defaultAddress;
+    const dao = validTokens.includes(tokenFromURL?.toLowerCase())
+      ? tokenFromURL.toLowerCase()
+      : defaultDao;
+
+    return { address, dao };
+  }
+
+  // Extracted URL parameters for initial state
+  const { address, dao: initialDao } = parseURLParams(searchParams);
+
+  const [wallet, setWallet] = useState(address);
+  const [dao, setDao] = useState(initialDao);
 
   const [walletData, setWalletData] = useState([]);
 
@@ -27,7 +52,7 @@ function App() {
   const [delegations, setDelegations] = useState("0");
   const [votingPower, setVotingPower] = useState("0");
   const userSearchInputRef = useRef(null);
-  const [dao, setDao] = useState("ens");
+
   const [showZeroBalance, setShowZeroBalance] = useState(false);
   const [dataBlock, setDataBlock] = useState("");
   // const daoSelectionClass =
@@ -97,6 +122,7 @@ function App() {
   }, [dao]);
 
   useEffect(() => {
+    console.log(dao);
     fetch("https://api.votingpower.xyz/delegation-details", {
       method: "POST",
       headers: {
