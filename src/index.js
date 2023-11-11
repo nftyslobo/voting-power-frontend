@@ -7,6 +7,7 @@ import { ThemeProvider } from "styled-components";
 import { ThorinGlobalStyles, lightTheme } from "@ensdomains/thorin";
 import { WagmiConfig, createClient, configureChains, mainnet } from "wagmi";
 import { infuraProvider } from "wagmi/providers/infura";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet],
@@ -25,7 +26,9 @@ root.render(
     <WagmiConfig client={client}>
       <ThemeProvider theme={lightTheme}>
         <ThorinGlobalStyles />
-        <App />
+        <Router>
+          <App />
+        </Router>
       </ThemeProvider>
     </WagmiConfig>
   </React.StrictMode>

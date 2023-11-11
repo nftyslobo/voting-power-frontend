@@ -13,67 +13,16 @@ import {
 } from "@ensdomains/thorin";
 import { useEnsName, useBlockNumber, useEnsAddress } from "wagmi";
 import { fetchEnsAddress } from "@wagmi/core";
+import { useSearchParams } from "react-router-dom";
 
 function App() {
-  const [walletData, setWalletData] = useState([
-    {
-      delegator: "0xC9E23b023bA23f48B26251B5Fa57FEae1f18B844",
-      delegator_balance: 0.0,
-      blockNumber: 16813786,
-      fromDelegate: "0xC9E23b023bA23f48B26251B5Fa57FEae1f18B844",
-      current: true,
-    },
-    {
-      delegator: "0xBC2E26deD32A96911B65EE2283a1E30F077BbC59",
-      delegator_balance: 0.0372218033,
-      blockNumber: 16796720,
-      fromDelegate: "0x0000000000000000000000000000000000000000",
-      current: true,
-    },
-    {
-      delegator: "0x77e8f1728941eE3aF1296bDd9C10d8b7c0b20061",
-      delegator_balance: 0.0,
-      blockNumber: 16675361,
-      fromDelegate: "0x0000000000000000000000000000000000000000",
-      current: true,
-    },
-  ]);
-  const [wallet, setWallet] = useState(
-    "0x2B888954421b424C5D3D9Ce9bB67c9bD47537d12"
-  );
+  const defaultAddress = "0x2B888954421b424C5D3D9Ce9bB67c9bD47537d12";
+  const [wallet, setWallet] = useState(defaultAddress);
+  const [searchParams] = useSearchParams();
 
-  const [topDelegates, setTopDelegates] = useState([
-    {
-      delegate: "0x81b287c0992b110adeb5903bf7e2d9350c80581a",
-      votingPower: 218140.4770269189,
-      delegations: 1130,
-      rank: 1.0,
-    },
-    {
-      delegate: "0x63c97cccae1f000af9f6a4f4641e282c4e8c63fb",
-      votingPower: 207400.06647476,
-      delegations: 1,
-      rank: 2.0,
-    },
-    {
-      delegate: "0x983110309620d911731ac0932219af06091b6744",
-      votingPower: 192950.3477773078,
-      delegations: 1126,
-      rank: 3.0,
-    },
-    {
-      delegate: "0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5",
-      votingPower: 169576.3944310115,
-      delegations: 721,
-      rank: 4.0,
-    },
-    {
-      delegate: "0x809fa673fe2ab515faa168259cb14e2bedebf68e",
-      votingPower: 155783.377519752,
-      delegations: 746,
-      rank: 5.0,
-    },
-  ]);
+  const [walletData, setWalletData] = useState([]);
+
+  const [topDelegates, setTopDelegates] = useState([]);
 
   const [delegations, setDelegations] = useState("0");
   const [votingPower, setVotingPower] = useState("0");
@@ -86,6 +35,25 @@ function App() {
   const [delegatePage, setDelegatePage] = useState(1);
 
   const [showHistoricDelegators, setShowHistoricDelegators] = useState(false);
+
+  useEffect(() => {
+    // Handle wallet address
+    const addressFromURL = searchParams.get("address");
+    if (
+      addressFromURL &&
+      addressFromURL.length === 42 &&
+      addressFromURL.startsWith("0x")
+    ) {
+      setWallet(addressFromURL);
+    }
+
+    // Handle dao token
+    const tokenFromURL = searchParams.get("token");
+    const validTokens = ["ens", "gtc", "arb", "op", "uni"];
+    if (tokenFromURL && validTokens.includes(tokenFromURL.toLowerCase())) {
+      setDao(tokenFromURL.toLowerCase());
+    }
+  }, [searchParams]);
 
   async function handleClick() {
     const { value } = userSearchInputRef.current;
