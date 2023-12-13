@@ -320,15 +320,19 @@ export function AddressTooltip(props) {
 }
 
 export function truncateAddress(address) {
+  if (address === '') {
+    return 'n/a';
+  }
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
+
 
 export const GetEns = ({ address, cn }) => {
   const { data, isError, isLoading } = useEnsName({
     address: address,
   });
 
-  const truncatedAddress = truncateAddress(address.toLowerCase());
+  const truncatedAddress = truncateAddress(address?.toLowerCase() ?? '');
 
   if (isLoading) return <div>{truncatedAddress}</div>;
   if (isError) return <div>Error fetching name</div>;
